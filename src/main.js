@@ -10,6 +10,9 @@ import './styles/index.less'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
+// 加载移动端rem适配工具
+import 'amfe-flexible'
+
 Vue.use(Vant)
 
 Vue.config.productionTip = false
