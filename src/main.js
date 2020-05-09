@@ -3,6 +3,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// 加载全局样式
+import './styles/index.less'
+
+// 加载移动端ui框架样式
+import Vant from 'vant'
+import 'vant/lib/index.css'
+
+Vue.use(Vant)
+
 Vue.config.productionTip = false
 
 new Vue({
