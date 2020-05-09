@@ -31,13 +31,15 @@
 
     <!-- 登录按钮 -->
     <div class="login-btn-wrap">
-      <van-button class="login-btn" type="info">登录</van-button>
+      <van-button class="login-btn" type="info" @click="onUserLogin">登录</van-button>
     </div>
     <!-- /登录按钮 -->
   </div>
 </template>
 
 <script>
+import { userLogin } from '@/api/user'
+
 export default {
   name: 'LoginIndex',
   components: {},
@@ -52,9 +54,21 @@ export default {
   },
   computed: {},
   watch: {},
-  created () {},
+  created () {
+    // this.onUserLogin()
+  },
   mounted () {},
   methods: {
+    async onUserLogin () {
+      try {
+        const res = await userLogin(this.user)
+        console.log('登录成功')
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+        console.log('登录失败', err)
+      }
+    },
     onClickLeft () {}
   }
 }
