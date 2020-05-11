@@ -10,11 +10,18 @@
     <!-- /导航栏 -->
 
     <!-- 登录表单 -->
-    <van-form @submit="onUserLogin">
+    <van-form
+      :show-error="false"
+      :show-error-message="false"
+      validate-first
+      @submit="onUserLogin"
+      @failed="onFailed"
+    >
       <van-field
         v-model="user.mobile"
         left-icon="smile-o"
         placeholder="请输入手机号"
+        name="手机号"
         :rules="formRules.mobile"
       />
       <van-field
@@ -22,6 +29,7 @@
         clearable
         left-icon="music-o"
         placeholder="请输入验证码"
+        name="验证码"
         :rules="formRules.code"
       >
         <template #button>
@@ -87,6 +95,12 @@ export default {
         console.log(err)
         console.log('登录失败', err)
         Toast.fail('登录失败, 手机号或验证码输入错误')
+      }
+    },
+    onFailed (error) {
+      // console.log(error)
+      if (error.errors[0]) {
+        Toast(error.errors[0].message)
       }
     },
     onClickLeft () {}
