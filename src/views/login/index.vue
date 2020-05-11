@@ -20,6 +20,7 @@
     >
       <van-field
         v-model="user.mobile"
+        center
         left-icon="smile-o"
         placeholder="请输入手机号"
         name="mobile"
@@ -28,15 +29,25 @@
       <van-field
         v-model="user.code"
         clearable
+        center
         left-icon="music-o"
         placeholder="请输入验证码"
         name="code"
         :rules="formRules.code"
       >
         <template #button>
+          <van-count-down
+            v-if="isCountDownShow"
+            :time="1000 * 5"
+            format="ss s"
+            @finish="isCountDownShow = false"
+          />
           <van-button
+            class="sendsms-btn"
+            v-else
             size="small"
             @click.prevent="onSendSms"
+            :loading="isCountLoading"
           >
             发送验证码
           </van-button>
@@ -53,7 +64,10 @@
 </template>
 
 <script>
-import { userLogin } from '@/api/user'
+import {
+  userLogin,
+  sendSms
+} from '@/api/user'
 import { Toast } from 'vant'
 
 export default {
@@ -75,7 +89,9 @@ export default {
           { required: true, message: '请填写验证码' },
           { pattern: /^\d{6}$/, message: '验证码格式错误' }
         ]
-      }
+      },
+      isCountDownShow: false,
+      isCountLoading: false
     }
   },
   computed: {},
@@ -111,14 +127,33 @@ export default {
     },
     // 验证码
     async onSendSms () {
-      console.log('onSendSms')
       try {
         await this.$refs['login-form'].validate('mobile')
-      } catch (err) {
+        // 开启发送验证码按钮loading状态
+        this.isCountLoading = true
+        // 验证通过 请求发送验证码
+        await sendSms(this.user.mobile)
         Toast({
-          message: err.message
+          message: '发送成功'
         })
+        // 短信发送成功 隐藏按钮并显示倒计时
+        this.isCountDownShow = true
+      } catch (err) {
+        if (err && err.response && err.response.status === 429) {
+          // 频繁发送提示消息
+          Toast('发送太频繁了，请稍后重试')
+        } else if (err.name === 'mobile') {
+          // 表单验证失败提示消息
+          Toast({
+            message: err.message
+          })
+        } else {
+          // 未知错误提示消息
+          Toast('发送失败, 请稍后重试')
+        }
       }
+      // 不管发送成功还是发送失败都关闭发送验证码按钮loading状态
+      this.isCountLoading = false
     },
     onClickLeft () {}
   }
@@ -126,6 +161,9 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .sendsms-btn {
+    height: 24px;
+  }
   .login-btn-wrap {
     padding: 20px;
     font-size: 15px;
