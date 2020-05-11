@@ -14,6 +14,7 @@
       :show-error="false"
       :show-error-message="false"
       validate-first
+      ref="login-form"
       @submit="onUserLogin"
       @failed="onFailed"
     >
@@ -21,7 +22,7 @@
         v-model="user.mobile"
         left-icon="smile-o"
         placeholder="请输入手机号"
-        name="手机号"
+        name="mobile"
         :rules="formRules.mobile"
       />
       <van-field
@@ -29,11 +30,16 @@
         clearable
         left-icon="music-o"
         placeholder="请输入验证码"
-        name="验证码"
+        name="code"
         :rules="formRules.code"
       >
         <template #button>
-          <van-button size="small">发送验证码</van-button>
+          <van-button
+            size="small"
+            @click.prevent="onSendSms"
+          >
+            发送验证码
+          </van-button>
         </template>
       </van-field>
       <!-- 登录按钮 -->
@@ -92,8 +98,8 @@ export default {
         console.log(res)
         Toast.success('登录成功')
       } catch (err) {
-        console.log(err)
-        console.log('登录失败', err)
+        // console.log(err)
+        // console.log('登录失败', err)
         Toast.fail('登录失败, 手机号或验证码输入错误')
       }
     },
@@ -101,6 +107,17 @@ export default {
       // console.log(error)
       if (error.errors[0]) {
         Toast(error.errors[0].message)
+      }
+    },
+    // 验证码
+    async onSendSms () {
+      console.log('onSendSms')
+      try {
+        await this.$refs['login-form'].validate('mobile')
+      } catch (err) {
+        Toast({
+          message: err.message
+        })
       }
     },
     onClickLeft () {}
