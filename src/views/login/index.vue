@@ -10,30 +10,31 @@
     <!-- /导航栏 -->
 
     <!-- 登录表单 -->
-    <van-cell-group>
+    <van-form @submit="onUserLogin">
       <van-field
         v-model="user.mobile"
         left-icon="smile-o"
         placeholder="请输入手机号"
+        :rules="formRules.mobile"
       />
       <van-field
         v-model="user.code"
         clearable
         left-icon="music-o"
         placeholder="请输入验证码"
+        :rules="formRules.code"
       >
         <template #button>
           <van-button size="small">发送验证码</van-button>
         </template>
       </van-field>
-    </van-cell-group>
+      <!-- 登录按钮 -->
+      <div class="login-btn-wrap">
+        <van-button class="login-btn" type="info">登录</van-button>
+      </div>
+      <!-- /登录按钮 -->
+    </van-form>
     <!-- /登录表单 -->
-
-    <!-- 登录按钮 -->
-    <div class="login-btn-wrap">
-      <van-button class="login-btn" type="info" @click="onUserLogin">登录</van-button>
-    </div>
-    <!-- /登录按钮 -->
   </div>
 </template>
 
@@ -50,6 +51,16 @@ export default {
       user: {
         mobile: '',
         code: ''
+      },
+      formRules: {
+        mobile: [
+          { required: true, message: '请填写手机号' },
+          { pattern: /^1[3|5|7|8]\d{9}$/, message: '手机号格式错误' }
+        ],
+        code: [
+          { required: true, message: '请填写验证码' },
+          { pattern: /^\d{6}$/, message: '验证码格式错误' }
+        ]
       }
     }
   },
