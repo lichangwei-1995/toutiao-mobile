@@ -1,5 +1,55 @@
 <template>
-  <div class="my-container">我的页面</div>
+  <div class="my-container">
+    <van-cell-group>
+      <van-cell title="单元格" value="内容" center>
+        <van-image
+          slot="icon"
+          round
+          width="50"
+          height="50"
+          src="https://img.yzcdn.cn/vant/cat.jpeg"
+        />
+        <div slot="title">昵称</div>
+        <van-button type="default" round>编辑资料</van-button>
+      </van-cell>
+      <van-grid>
+        <van-grid-item>
+          <div slot="text">
+            <div class="count">111</div>
+            <div class="text">头条</div>
+          </div>
+        </van-grid-item>
+        <van-grid-item>
+          <div slot="text">
+            <div class="count">111</div>
+            <div class="text">头条</div>
+          </div>
+        </van-grid-item>
+        <van-grid-item>
+          <div slot="text">
+            <div class="count">111</div>
+            <div class="text">头条</div>
+          </div>
+        </van-grid-item>
+        <van-grid-item>
+          <div slot="text">
+            <div class="count">111</div>
+            <div class="text">头条</div>
+          </div>
+        </van-grid-item>
+      </van-grid>
+    </van-cell-group>
+
+    <van-grid :column-num="2">
+      <van-grid-item icon="photo-o" text="文字" />
+      <van-grid-item icon="photo-o" text="文字" />
+    </van-grid>
+
+    <van-cell title="消息通知" is-link to="/" />
+    <van-cell title="实名认证" is-link to="/" />
+    <van-cell title="小智同学" is-link to="/" />
+    <van-cell title="退出登录" />
+  </div>
 </template>
 
 <script>
