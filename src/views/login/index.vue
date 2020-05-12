@@ -113,18 +113,21 @@ export default {
         // 将后端返回的用户登录状态存储到 Vuex 中
         this.$store.commit('setUser', res.data.data)
         Toast.success('登录成功')
+        this.$router.back()
       } catch (err) {
         // console.log(err)
         // console.log('登录失败', err)
         Toast.fail('登录失败, 手机号或验证码输入错误')
       }
     },
+
     onFailed (error) {
       // console.log(error)
       if (error.errors[0]) {
         Toast(error.errors[0].message)
       }
     },
+
     // 验证码
     async onSendSms () {
       try {
