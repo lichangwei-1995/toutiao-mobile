@@ -18,10 +18,10 @@
     <van-tabs v-model="active">
       <van-tab
         :title="channel.name"
-        v-for="channel in channels"
-        :key="channel.id"
+        v-for="(channel, index) in channels"
+        :key="index"
       >
-
+        <article-list :channel="channel" />
       </van-tab>
     </van-tabs>
     <!-- /文章频道列表 -->
@@ -32,9 +32,14 @@
 import {
   getUserChannels
 } from '@/api/user'
+
+import ArticleList from './components/article-list'
+
 export default {
   name: 'HomeIndex',
-  components: {},
+  components: {
+    ArticleList
+  },
   props: {},
   data () {
     return {
