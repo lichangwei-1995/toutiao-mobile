@@ -38,7 +38,7 @@
         <template #button>
           <van-count-down
             v-if="isCountDownShow"
-            :time="1000 * 5"
+            :time="1000 * 60"
             format="ss s"
             @finish="isCountDownShow = false"
           />
