@@ -26,6 +26,19 @@
       </van-tab>
     </van-tabs>
     <!-- /文章频道列表 -->
+
+    <!-- 弹出层 -->
+    <van-popup
+      class="channel-popup"
+      v-model="isChannelEditShow"
+      closeable
+      close-icon-position="top-left"
+      position="top"
+      :style="{ height: '100%' }"
+    >
+      <channel-edit />
+    </van-popup>
+    <!-- /弹出层 -->
   </div>
 </template>
 
@@ -36,16 +49,20 @@ import {
 
 import ArticleList from './components/article-list'
 
+import ChannelEdit from './components/channel-edit'
+
 export default {
   name: 'HomeIndex',
   components: {
-    ArticleList
+    ArticleList,
+    ChannelEdit
   },
   props: {},
   data () {
     return {
       channels: [],
-      active: 0
+      active: 0,
+      isChannelEditShow: true
     }
   },
   computed: {},
@@ -85,5 +102,9 @@ export default {
         border-radius: 4px;
         bottom: 20px;
       }
+  }
+  .channel-popup {
+    padding-top: 50px;
+    box-sizing: border-box;
   }
 </style>
