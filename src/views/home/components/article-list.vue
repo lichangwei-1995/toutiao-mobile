@@ -4,6 +4,7 @@
       v-model="isLoading"
       @refresh="onRefresh"
       :success-text="refreshSuccessText"
+      :success-duration="1000"
     >
       <van-list
         v-model="loading"
@@ -12,7 +13,11 @@
         error-text="加载失败了"
         @load="onLoad"
       >
-        <van-cell v-for="(article, index) in articlelist" :key="index" :title="article.title" />
+        <article-item
+          v-for="(article, index) in articlelist"
+          :key="index"
+          :article="article"
+        />
       </van-list>
     </van-pull-refresh>
   </div>
@@ -20,9 +25,12 @@
 
 <script>
 import { getArticleList } from '@/api/article'
+import ArticleItem from '@/components/article-item'
 export default {
   name: 'ArticleList',
-  components: {},
+  components: {
+    ArticleItem
+  },
   props: {
     // 频道对象
     channel: {
