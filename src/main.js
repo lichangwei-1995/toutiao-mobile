@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import './untils/dayjs'
+
 // 加载移动端ui框架样式
 import Vant from 'vant'
 import 'vant/lib/index.css'

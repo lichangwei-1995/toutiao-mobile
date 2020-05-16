@@ -15,8 +15,9 @@
     <!-- /导航栏 -->
 
     <!-- 文章频道列表 -->
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" class="article-channel">
       <van-tab
+        class="channel-item"
         :title="channel.name"
         v-for="(channel, index) in channels"
         :key="index"
@@ -75,5 +76,14 @@ export default {
       background: rgba(255, 255, 255, .2);
       color: #fff;
     }
+  }
+  .article-channel {
+    /deep/ .van-tabs__line {
+        width: 15px !important;
+        height: 3px;
+        background-color: #3296fa;
+        border-radius: 4px;
+        bottom: 20px;
+      }
   }
 </style>
