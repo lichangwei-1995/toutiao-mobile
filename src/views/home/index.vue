@@ -24,6 +24,14 @@
       >
         <article-list :channel="channel" />
       </van-tab>
+      <div slot="nav-right" class="wap-right"></div>
+      <div
+        slot="nav-right"
+        @click="isChannelEditShow = true"
+        class="channeledit-icon"
+      >
+        <van-icon name="wap-nav" />
+      </div>
     </van-tabs>
     <!-- /文章频道列表 -->
 
@@ -36,7 +44,9 @@
       position="top"
       :style="{ height: '100%' }"
     >
-      <channel-edit />
+      <channel-edit
+        :user-channels="channels"
+      />
     </van-popup>
     <!-- /弹出层 -->
   </div>
@@ -62,7 +72,7 @@ export default {
     return {
       channels: [],
       active: 0,
-      isChannelEditShow: true
+      isChannelEditShow: false
     }
   },
   computed: {},
@@ -106,5 +116,20 @@ export default {
   .channel-popup {
     padding-top: 50px;
     box-sizing: border-box;
+  }
+  .wap-right {
+    width: 33px;
+    flex-shrink: 0;
+  }
+  .channeledit-icon {
+    position: fixed;
+    right: 0;
+    width: 33px;
+    background-color: rgba(255, 255, 255, .9);
+    height: 44px;
+    text-align: center;
+    font-size: 24px;
+    line-height: 50px;
+    border-left: 1px solid #eee;
   }
 </style>

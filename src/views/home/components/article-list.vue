@@ -61,8 +61,7 @@ export default {
           timestamp: this.timestamp || Date.now(),
           with_top: 1
         })
-        console.log(data)
-
+        // console.log(data)
         // 将数据添加到list数组中
         const { results } = data.data
         this.articlelist.push(...results)
