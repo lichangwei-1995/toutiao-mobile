@@ -19,7 +19,10 @@
     <!-- /搜索历史记录 -->
 
     <!-- 搜索建议 -->
-    <search-suggestion v-else-if="searchText" />
+    <search-suggestion
+      v-else-if="searchText"
+      :search-text="searchText"
+    />
     <!-- /搜索建议 -->
 
     <!-- 历史记录 -->

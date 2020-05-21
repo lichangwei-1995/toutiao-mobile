@@ -1,23 +1,47 @@
 <template>
   <div class="search-suggestion">
-    <van-cell title="君莫笑..." icon="search"></van-cell>
-    <van-cell title="大漠孤烟..." icon="search"></van-cell>
-    <van-cell title="沐雨橙风..." icon="search"></van-cell>
-    <van-cell title="寒烟柔..." icon="search"></van-cell>
-    <van-cell title="一叶知秋..." icon="search"></van-cell>
+    <van-cell
+      icon="search"
+      :title="item"
+      v-for="(item, index) in suggestions"
+      :key="index"
+    >
+    </van-cell>
   </div>
 </template>
 
 <script>
+import { getSearchSuggestion } from '@/api/search'
+import { debounce } from 'lodash'
+
 export default {
   name: 'SearchSuggestion',
   components: {},
-  props: {},
+  props: {
+    searchText: {
+      type: String,
+      required: true
+    }
+  },
   data () {
-    return {}
+    return {
+      suggestions: []
+    }
   },
   computed: {},
-  watch: {},
+  watch: {
+    // searchText () {
+    //   console.log(111)
+    // }
+    searchText: {
+      handler: debounce(async function () {
+        const res = await getSearchSuggestion(this.searchText)
+        // console.log(res)
+        this.suggestions = res.data.data.options
+      }, 500),
+      immediate: true
+    }
+  },
   created () {},
   mounted () {},
   methods: {}

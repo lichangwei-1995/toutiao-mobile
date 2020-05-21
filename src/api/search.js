@@ -8,7 +8,7 @@ export const getSearchSuggestion = q => {
   return request({
     method: 'GET',
     url: '/app/v1_0/suggestion',
-    data: {
+    params: {
       q
     }
   })
