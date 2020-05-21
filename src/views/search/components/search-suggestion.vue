@@ -2,10 +2,10 @@
   <div class="search-suggestion">
     <van-cell
       icon="search"
-      :title="item"
       v-for="(item, index) in suggestions"
       :key="index"
     >
+      <div v-html="highLight(item)"></div>
     </van-cell>
   </div>
 </template>
@@ -44,7 +44,14 @@ export default {
   },
   created () {},
   mounted () {},
-  methods: {}
+  methods: {
+    highLight (item) {
+      return item.replace(
+        new RegExp(this.searchText, 'gi'),
+        `<span style="color: red">${this.searchText}</span>`
+      )
+    }
+  }
 }
 </script>
 
