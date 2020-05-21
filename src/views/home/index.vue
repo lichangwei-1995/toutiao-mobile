@@ -46,6 +46,9 @@
     >
       <channel-edit
         :user-channels="channels"
+        :active="active"
+        @close="isChannelEditShow = false"
+        @update-active="onupDateActive"
       />
     </van-popup>
     <!-- /弹出层 -->
@@ -61,6 +64,9 @@ import ArticleList from './components/article-list'
 
 import ChannelEdit from './components/channel-edit'
 
+import { mapState } from 'vuex'
+import { getItem } from '@/untils/storage'
+
 export default {
   name: 'HomeIndex',
   components: {
@@ -75,7 +81,9 @@ export default {
       isChannelEditShow: false
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['user'])
+  },
   watch: {},
   created () {
     this.loadChannels()
@@ -83,8 +91,24 @@ export default {
   mounted () {},
   methods: {
     async loadChannels () {
-      const res = await getUserChannels()
-      this.channels = res.data.data.channels
+      if (this.user) {
+        const res = await getUserChannels()
+        this.channels = res.data.data.channels
+      } else {
+        const localChannels = getItem('user-channels')
+        if (localChannels) {
+          this.channels = localChannels
+        } else {
+          const res = await getUserChannels()
+          this.channels = res.data.data.channels
+        }
+      }
+      // const res = await getUserChannels()
+      // this.channels = res.data.data.channels
+    },
+
+    onupDateActive (index) {
+      this.active = index
     }
   }
 }
