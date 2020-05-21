@@ -15,7 +15,11 @@
     <!-- /搜索框 -->
 
     <!-- 搜索历史记录 -->
-    <search-result class="search-result" v-if="isResultShow" />
+    <search-result
+      class="search-result"
+      v-if="isResultShow"
+      :q="searchText"
+    />
     <!-- /搜索历史记录 -->
 
     <!-- 搜索建议 -->
