@@ -31,7 +31,11 @@
     <!-- /搜索建议 -->
 
     <!-- 历史记录 -->
-    <search-history :search-history="searchHistory" v-else />
+    <search-history
+      :search-history="searchHistory"
+      v-else
+      @search="onSearch"
+    />
     <!-- /历史记录 -->
   </div>
 </template>
@@ -40,6 +44,8 @@
 import SearchHistory from './components/search-history'
 import SearchSuggestion from './components/search-suggestion'
 import SearchResult from './components/search-results'
+
+import { setItem, getItem } from '@/untils/storage'
 
 export default {
   name: 'SearchIndex',
@@ -53,7 +59,7 @@ export default {
     return {
       searchText: '',
       isResultShow: false,
-      searchHistory: []
+      searchHistory: getItem('search-history') || []
     }
   },
   computed: {},
@@ -70,6 +76,9 @@ export default {
       }
 
       this.searchHistory.unshift(searchText)
+      // 用户登录情况下 搜索记录自动保存到线上
+      // 未登录情况下 储存到本地
+      setItem('search-history', this.searchHistory)
       this.isResultShow = true
     },
     onCancel () {

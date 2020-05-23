@@ -6,7 +6,10 @@
       :key="index"
       @click="$emit('search', item)"
     >
-      <div v-html="highLight(item)"></div>
+      <div
+        v-html="highLight(item)"
+      >
+      </div>
     </van-cell>
   </div>
 </template>
