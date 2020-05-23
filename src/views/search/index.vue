@@ -7,7 +7,7 @@
         show-action
         placeholder="请输入搜索关键词"
         background="#3296fa"
-        @search="onSearch"
+        @search="onSearch(searchText)"
         @cancel="onCancel"
         @focus="isResultShow = false"
       />
@@ -26,6 +26,7 @@
     <search-suggestion
       v-else-if="searchText"
       :search-text="searchText"
+      @search="onSearch"
     />
     <!-- /搜索建议 -->
 
@@ -59,8 +60,9 @@ export default {
   created () {},
   mounted () {},
   methods: {
-    onSearch () {
-      console.log('val')
+    onSearch (searchText) {
+      this.searchText = searchText
+      // console.log('val')
       this.isResultShow = true
     },
     onCancel () {
