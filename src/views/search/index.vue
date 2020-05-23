@@ -31,7 +31,7 @@
     <!-- /搜索建议 -->
 
     <!-- 历史记录 -->
-    <search-history v-else />
+    <search-history :search-history="searchHistory" v-else />
     <!-- /历史记录 -->
   </div>
 </template>
@@ -52,7 +52,8 @@ export default {
   data () {
     return {
       searchText: '',
-      isResultShow: false
+      isResultShow: false,
+      searchHistory: []
     }
   },
   computed: {},
@@ -62,7 +63,13 @@ export default {
   methods: {
     onSearch (searchText) {
       this.searchText = searchText
-      // console.log('val')
+      // 去除重复的搜索记录 --- indexOf
+      const index = this.searchHistory.indexOf(searchText)
+      if (index !== -1) {
+        this.searchHistory.splice(index, 1)
+      }
+
+      this.searchHistory.unshift(searchText)
       this.isResultShow = true
     },
     onCancel () {
